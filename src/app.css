@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: hsl(0 0% 5%);
+  --foreground: hsl(0 0% 98%);
+  --card: hsl(0 0% 8%);
+  --card-foreground: hsl(0 0% 98%);
+  --popover: hsl(0 0% 8%);
+  --popover-foreground: hsl(0 0% 98%);
+  --primary: hsl(0 0% 98%);
+  --primary-foreground: hsl(0 0% 5%);
+  --secondary: hsl(0 0% 12%);
+  --secondary-foreground: hsl(0 0% 98%);
+  --muted: hsl(0 0% 15%);
+  --muted-foreground: hsl(0 0% 60%);
+  /* Darkened teal accent from 50% to 35% lightness */
+  --accent: oklch(0.8834 0.1794 165.54);
+  --accent-foreground: hsl(0 0% 15%);
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(0 0% 98%);
+  --border: hsl(0 0% 15%);
+  --input: hsl(0 0% 15%);
+  /* Updated ring color to match darker teal */
+  --ring: oklch(0.8834 0.1794 165.54);
+  /* Updated chart colors to use darker teal variants */
+  --chart-1: oklch(0.8834 0.1794 165.54);
+  --chart-2: hsl(180 80% 40%);
+  --chart-3: hsl(180 60% 30%);
+  --chart-4: hsl(180 90% 38%);
+  --chart-5: hsl(180 70% 28%);
+  --radius: 0.5rem;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  /* <CHANGE> Added custom font families - Azonix for headings */
+  --font-heading: "Azonix", system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* <CHANGE> Apply heading font to relevant elements */
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(0 0% 8%);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(from var(--accent) calc(l * 0.85) c h);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) hsl(0 0% 8%);
+  }
+}
