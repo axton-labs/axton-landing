@@ -59,10 +59,10 @@
       </div>
 
       <div class="bg-background/40 relative z-20 h-screen">
-        <div class="container mx-auto px-4 py-50 md:pt-56">
+        <div class="container mx-auto px-4 pt-50 md:pt-56">
           <div class="max-w-4xl mx-auto text-center">
             <div
-              class="inline-flex items-center gap-2 px-4 py-2 bg-muted/50 rounded-full text-sm mb-8 border border-border/40"
+              class="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-muted/50 rounded-full text-sm mb-8 border border-border/40"
             >
               <div class="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
               <span class="text-muted-foreground">The Power of MEV</span>
