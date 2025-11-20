@@ -71,6 +71,8 @@
   }
   body {
     @apply bg-background text-foreground;
+
+    font-family: "Open Sans", system-ui, -apple-system, sans-serif;;
   }
 
   /* <CHANGE> Apply heading font to relevant elements */
