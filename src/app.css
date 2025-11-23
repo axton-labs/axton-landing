@@ -61,8 +61,6 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  /* <CHANGE> Added custom font families - Azonix for headings */
-  --font-heading: "Azonix", system-ui, -apple-system, sans-serif;
 }
 
 @layer base {
@@ -75,9 +73,11 @@
     font-family: "Open Sans", system-ui, -apple-system, sans-serif;;
   }
 
-  /* <CHANGE> Apply heading font to relevant elements */
-  .font-heading {
-    font-family: var(--font-heading);
+  .font-azonix {
+    font-family: "Azonix", system-ui, -apple-system, sans-serif;
+  }
+  .font-open-sans {
+    font-family: "Open Sans", system-ui, -apple-system, sans-serif;
   }
 
   /* Custom scrollbar */

@@ -1,136 +1,170 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import { browser } from "$app/environment";
   import { Zap, Wallet, Activity, Users } from "lucide-svelte";
-  import Lightning from "../components/Lightning.svelte";
   import Galaxy from "../components/Galaxy.svelte";
   import { Button } from "../components/ui/button";
   import * as Card from "../components/ui/card";
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  if (browser) {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  onMount(() => {
+    gsap.fromTo(
+      ".hero-badge",
+      { opacity: 0, y: -20 },
+      { opacity: 1, y: 0, duration: 0.6, delay: 0.2, ease: "power2.out" }
+    );
+
+    gsap.fromTo(
+      ".hero-title",
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, delay: 0.4, ease: "power2.out" }
+    );
+
+    gsap.fromTo(
+      ".hero-description",
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, delay: 0.6, ease: "power2.out" }
+    );
+
+    gsap.fromTo(
+      ".hero-buttons",
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, delay: 0.8, ease: "power2.out" }
+    );
+
+    gsap.utils.toArray(".section-title").forEach((elem: any) => {
+      gsap.fromTo(
+        elem,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top 85%",
+          },
+        }
+      );
+    });
+
+    gsap.fromTo(
+      ".team-description",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".team-description",
+          start: "top 85%",
+        },
+      }
+    );
+
+    gsap.utils.toArray(".animate-card").forEach((elem: any, index: number) => {
+      gsap.fromTo(
+        elem,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: index * 0.05,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top 85%",
+          },
+        }
+      );
+    });
+
+    gsap.fromTo(
+      ".cta-section",
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".cta-section",
+          start: "top 85%",
+        },
+      }
+    );
+  });
 </script>
 
 <div class="min-h-screen bg-background text-foreground">
-  <!-- Hero Section -->
-  <header class="fixed top-4 left-0 right-0 z-50">
-    <nav
-      class="container mx-auto px-8 py-6 flex items-center justify-between border-b border-border/40 bg-background/40 backdrop-blur-md rounded-xl"
-    >
-      <a
-        href="/"
-        class="flex items-center gap-3 hover:scale-105 transition-transform"
-      >
-        <img src="/axton-logo.png" alt="Axton Labs" class="h-8 w-8" />
-        <span class="font-heading text-xl tracking-wider">AXTON</span>
-      </a>
-
-      <div class="hidden md:flex items-center gap-8">
-        <a
-          href="#products"
-          class="text-muted-foreground hover:text-foreground transition-colors font-medium"
-        >
-          Products
-        </a>
-        <a
-          href="#mev"
-          class="text-muted-foreground hover:text-foreground transition-colors font-medium"
-        >
-          About MEV
-        </a>
-        <a
-          href="#team"
-          class="text-muted-foreground hover:text-foreground transition-colors font-medium"
-        >
-          Team
-        </a>
-        <a
-          href="https://docs.axtonlabs.com"
-          class="text-muted-foreground hover:text-foreground transition-colors font-medium"
-        >
-          Docs
-        </a>
-      </div>
-
-      <Button variant="accent" size="lg">Download</Button>
-    </nav>
-  </header>
-
   <main>
     <!-- Hero -->
     <section class="relative overflow-hidden h-screen">
       <div class="absolute inset-0">
-        <Lightning hue={185} xOffset={0} speed={1} intensity={1} size={1} />
+        <Galaxy
+          hueShift={140}
+          density={1}
+          mouseRepulsion={true}
+          transparent={true}
+          saturation={0.4}
+          starSpeed={0.4}
+          speed={0.1}
+        />
       </div>
 
-      <div class="bg-background/40 relative z-20 h-screen">
+      <div class="bg-background/40 relative z-20 h-screen pointer-events-none">
         <div class="container mx-auto px-4 pt-50 md:pt-56">
           <div class="max-w-4xl mx-auto text-center">
-            <div
-              class="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-muted/50 rounded-full text-sm mb-8 border border-border/40"
-            >
-              <div class="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
-              <span class="text-muted-foreground">The Power of MEV</span>
-            </div>
-
             <h1
-              class="text-5xl md:text-7xl font-heading font-bold tracking-tight mb-6 text-balance"
+              class="hero-title text-5xl md:text-7xl font-azonix font-bold tracking-tight mb-6 text-balance"
             >
               AXTON LABS
             </h1>
 
             <p
-              class="text-xl md:text-2xl text-muted-foreground mb-12 text-pretty leading-relaxed"
+              class="hero-description text-xl md:text-2xl text-muted-foreground mb-12 text-pretty leading-relaxed"
             >
-              MEV-enabled wallet and supply chain infrastructure for traders who
-              demand more.
+              Self-custody wallet and supply chain infrastructure for traders
+              who demand more.
             </p>
 
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="accent">Get Started</Button>
-              <Button size="lg" variant="secondary">View Docs</Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- What is MEV -->
-    <section id="mev" class="py-20 bg-muted/30 border-y border-border/40">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto">
-          <h2
-            class="text-3xl md:text-4xl font-heading font-bold mb-6 text-center"
-          >
-            What is MEV?
-          </h2>
-          <p
-            class="text-lg text-muted-foreground leading-relaxed mb-6 text-center text-pretty"
-          >
-            Maximal Extractable Value (MEV) is the value that can be extracted
-            by manipulating transaction sequencing. This includes adding,
-            removing, or reordering transactions within a block.
-          </p>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
-            {#each ["Arbitrage", "Sandwiching", "Backrun", "Liquidations"] as type}
-              <div
-                class="bg-background border border-border rounded-lg p-4 text-center"
+            <div
+              class="hero-buttons flex flex-col sm:flex-row gap-4 justify-center pointer-events-auto"
+            >
+              <Button size="lg" variant="accent" href="/download"
+                >Get Started</Button
               >
-                <div class="text-sm font-mono text-accent">{type}</div>
-              </div>
-            {/each}
+              <Button
+                size="lg"
+                variant="secondary"
+                href="https://docs.axtonlabs.com">View Docs</Button
+              >
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Products -->
-    <section id="products" class="py-24">
+    <section id="products" class="py-24 bg-muted/30">
       <div class="container mx-auto px-4">
         <h2
-          class="text-3xl md:text-5xl font-heading font-bold mb-16 text-center"
+          class="section-title text-3xl md:text-5xl font-heading font-bold mb-16 text-center"
         >
           Axton Supply Chain
         </h2>
 
         <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <!-- Wallet -->
-          <Card.Root class="hover:border-accent transition-colors">
+          <Card.Root class="animate-card hover:border-accent transition-colors">
             <Card.Content>
               <div
                 class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6"
@@ -156,7 +190,7 @@
           </Card.Root>
 
           <!-- OFA -->
-          <Card.Root class="hover:border-accent transition-colors">
+          <Card.Root class="animate-card hover:border-accent transition-colors">
             <Card.Content>
               <div
                 class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6"
@@ -174,7 +208,7 @@
           </Card.Root>
 
           <!-- Settlement -->
-          <Card.Root class="hover:border-accent transition-colors">
+          <Card.Root class="animate-card hover:border-accent transition-colors">
             <Card.Content>
               <div
                 class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6"
@@ -205,33 +239,224 @@
       </div>
     </section>
 
-    <!-- Stats/Trust -->
-    <section class="py-20 bg-muted/30 border-y border-border/40">
+    <!-- Features: Keep Everything in One Place -->
+    <section id="features" class="py-24">
       <div class="container mx-auto px-4">
-        <div class="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto text-center">
-          <div>
-            <div
-              class="text-4xl md:text-5xl font-heading font-bold text-accent mb-2"
+        <div class="max-w-6xl mx-auto">
+          <h2
+            class="section-title text-3xl md:text-5xl font-heading font-bold mb-16 text-center"
+          >
+            Keep everything <span class="text-accent">in one place</span>
+          </h2>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <Card.Root
+              class="animate-card hover:border-accent transition-colors"
             >
-              2+
-            </div>
-            <div class="text-muted-foreground">Years MEV Experience</div>
+              <Card.Content>
+                <h3 class="text-xl font-heading font-bold mb-4">Your Wallet</h3>
+                <ul class="space-y-3 text-muted-foreground">
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span>Multiple chains, one wallet. No more switching.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span
+                      >Monitor activity with transaction history and
+                      notifications.</span
+                    >
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span
+                      >Communicate with your addresses using the built-in chat.</span
+                    >
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span>Create repeatable transactions with templates.</span>
+                  </li>
+                </ul>
+              </Card.Content>
+            </Card.Root>
+
+            <Card.Root
+              class="animate-card hover:border-accent transition-colors"
+            >
+              <Card.Content>
+                <h3 class="text-xl font-heading font-bold mb-4">
+                  Your MEV Hub
+                </h3>
+                <ul class="space-y-3 text-muted-foreground">
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span>Real-time MEV capture and rebate tracking.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span>Advanced transaction routing.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span>Priority fee optimization.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span>Bundle submission and tracking.</span>
+                  </li>
+                </ul>
+              </Card.Content>
+            </Card.Root>
           </div>
-          <div>
-            <div
-              class="text-4xl md:text-5xl font-heading font-bold text-accent mb-2"
+        </div>
+      </div>
+    </section>
+
+    <!-- Features: Powerful Tools -->
+    <section class="py-24 bg-muted/30">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <h2
+            class="section-title text-3xl md:text-5xl font-heading font-bold mb-16 text-center"
+          >
+            Powerful <span class="text-accent">tools</span> made for everyone
+          </h2>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card.Root
+              class="animate-card hover:border-accent transition-colors"
             >
-              Solana
-            </div>
-            <div class="text-muted-foreground">Native Infrastructure</div>
+              <Card.Content>
+                <div
+                  class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4"
+                >
+                  <Activity class="w-6 h-6 text-accent" />
+                </div>
+                <h3 class="text-xl font-heading font-bold mb-3">Smart Swaps</h3>
+                <p class="text-muted-foreground">
+                  Swap tokens super fast with MEV protection and optimal
+                  routing.
+                </p>
+              </Card.Content>
+            </Card.Root>
+
+            <Card.Root
+              class="animate-card hover:border-accent transition-colors"
+            >
+              <Card.Content>
+                <div
+                  class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4"
+                >
+                  <Wallet class="w-6 h-6 text-accent" />
+                </div>
+                <h3 class="text-xl font-heading font-bold mb-3">
+                  Stake & Earn
+                </h3>
+                <p class="text-muted-foreground">
+                  Store, stake, and earn rewards with your tokens effortlessly.
+                </p>
+              </Card.Content>
+            </Card.Root>
+
+            <Card.Root
+              class="animate-card hover:border-accent transition-colors"
+            >
+              <Card.Content>
+                <div
+                  class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4"
+                >
+                  <Zap class="w-6 h-6 text-accent" />
+                </div>
+                <h3 class="text-xl font-heading font-bold mb-3">
+                  Advanced Analytics
+                </h3>
+                <p class="text-muted-foreground">
+                  Track your portfolio performance and MEV capture in real-time.
+                </p>
+              </Card.Content>
+            </Card.Root>
           </div>
-          <div>
-            <div
-              class="text-4xl md:text-5xl font-heading font-bold text-accent mb-2"
+        </div>
+      </div>
+    </section>
+
+    <!-- Features: Security -->
+    <section id="security" class="py-24">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <h2
+            class="section-title text-3xl md:text-5xl font-heading font-bold mb-16 text-center"
+          >
+            Controlled by you, <span class="text-accent">secured</span> by us
+          </h2>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <Card.Root
+              class="animate-card hover:border-accent transition-colors"
             >
-              3
-            </div>
-            <div class="text-muted-foreground">Core Products</div>
+              <Card.Content>
+                <h3 class="text-xl font-heading font-bold mb-4">
+                  Your Security
+                </h3>
+                <ul class="space-y-3 text-muted-foreground">
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span
+                      >Self-custodial means you control your funds. We never
+                      have access.</span
+                    >
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span
+                      >Private by design. No name, email, or phone number
+                      required.</span
+                    >
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span
+                      >Scam detection flags malicious transactions instantly.</span
+                    >
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span
+                      >Connect your Ledger to keep your crypto even safer.</span
+                    >
+                  </li>
+                </ul>
+              </Card.Content>
+            </Card.Root>
+
+            <Card.Root
+              class="animate-card hover:border-accent transition-colors"
+            >
+              <Card.Content>
+                <h3 class="text-xl font-heading font-bold mb-4">
+                  Your Support
+                </h3>
+                <ul class="space-y-3 text-muted-foreground">
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span>24/7 community support from MEV experts.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span>Comprehensive documentation and guides.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span>Active Discord community of traders.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Zap class="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                    <span>Regular updates and new features.</span>
+                  </li>
+                </ul>
+              </Card.Content>
+            </Card.Root>
           </div>
         </div>
       </div>
@@ -241,19 +466,51 @@
     <section id="team" class="py-24">
       <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto text-center mb-16">
-          <h2 class="text-3xl md:text-5xl font-heading font-bold mb-6">
-            Built by MEV Experts
+          <h2
+            class="section-title text-3xl md:text-5xl font-heading font-bold mb-6"
+          >
+            Built by Experts
           </h2>
-          <p class="text-lg text-muted-foreground text-pretty leading-relaxed">
-            The team behind Axton Labs has over 2 years of experience MEV
-            searching on Solana. Expertise in Distributed Systems, Full-Stack
-            Development, MEV, and Hardware.
+          <p
+            class="team-description text-lg text-muted-foreground text-pretty leading-relaxed"
+          >
+            The team behind Axton Labs has over 6 years of experience in wallet
+            security research. Bringing deep expertise across software
+            development, hardware security, blockchain technology, and web3
+            marketing.
           </p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <!-- Alan -->
+          <Card.Root
+            class="animate-card text-center hover:border-accent transition-colors"
+          >
+            <Card.Content>
+              <div
+                class="w-20 h-20 bg-accent/10 rounded-full mx-auto mb-4 flex items-center justify-center"
+              >
+                <Users class="w-10 h-10 text-accent" />
+              </div>
+              <h3 class="text-xl font-heading font-bold mb-2">Alan</h3>
+              <p class="text-sm text-accent mb-2">Co-Founder</p>
+              <p class="text-sm text-muted-foreground mb-3">
+                Product development & growth expert. Ex 1inch, eesee
+              </p>
+              <a
+                href="https://x.com/solhandl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-accent hover:underline font-mono text-xs"
+              >
+                @solhandl
+              </a>
+            </Card.Content>
+          </Card.Root>
           <!-- Sarmat -->
-          <Card.Root class="text-center hover:border-accent transition-colors">
+          <Card.Root
+            class="animate-card text-center hover:border-accent transition-colors"
+          >
             <Card.Content>
               <div
                 class="w-20 h-20 bg-accent/10 rounded-full mx-auto mb-4 flex items-center justify-center"
@@ -261,6 +518,10 @@
                 <Users class="w-10 h-10 text-accent" />
               </div>
               <h3 class="text-xl font-heading font-bold mb-2">Sarmat</h3>
+              <p class="text-sm text-accent mb-2">Co-Founder</p>
+              <p class="text-sm text-muted-foreground mb-3">
+                Hardware, security & blockchain expert. Ex 1inch, bigwhalelabs
+              </p>
               <a
                 href="https://x.com/0xsarmat"
                 target="_blank"
@@ -271,24 +532,38 @@
               </a>
             </Card.Content>
           </Card.Root>
-
-          <!-- Alan -->
-          <Card.Root class="text-center hover:border-accent transition-colors">
+          <!-- Dave -->
+          <Card.Root
+            class="animate-card text-center hover:border-accent transition-colors"
+          >
             <Card.Content>
               <div
                 class="w-20 h-20 bg-accent/10 rounded-full mx-auto mb-4 flex items-center justify-center"
               >
                 <Users class="w-10 h-10 text-accent" />
               </div>
-              <h3 class="text-xl font-heading font-bold mb-2">Alan</h3>
-              <a
-                href="https://x.com/solhandl"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-accent hover:underline font-mono text-sm"
+              <h3 class="text-xl font-heading font-bold mb-2">Dave</h3>
+              <p class="text-sm text-accent mb-2">Head of Marketing</p>
+              <p class="text-sm text-muted-foreground mb-3">
+                Web3 marketing expert
+              </p>
+            </Card.Content>
+          </Card.Root>
+          <!-- Alex -->
+          <Card.Root
+            class="animate-card text-center hover:border-accent transition-colors"
+          >
+            <Card.Content>
+              <div
+                class="w-20 h-20 bg-accent/10 rounded-full mx-auto mb-4 flex items-center justify-center"
               >
-                @solhandl
-              </a>
+                <Users class="w-10 h-10 text-accent" />
+              </div>
+              <h3 class="text-xl font-heading font-bold mb-2">Alex</h3>
+              <p class="text-sm text-accent mb-2">Head of Design</p>
+              <p class="text-sm text-muted-foreground mb-3">
+                Web3 design expert
+              </p>
             </Card.Content>
           </Card.Root>
         </div>
@@ -303,10 +578,11 @@
           density={1}
           mouseRepulsion={true}
           transparent={true}
+          disableAnimation={true}
         />
       </div>
       <div
-        class="container mx-auto px-4 text-center relative z-20 pointer-events-none"
+        class="cta-section container mx-auto px-4 text-center relative z-20 pointer-events-none"
       >
         <h2
           class="text-3xl md:text-5xl font-heading font-bold mb-6 text-balance"
@@ -319,25 +595,13 @@
           Join traders who are maximizing their MEV capture with Axton's
           complete infrastructure.
         </p>
-        <Button size="lg" variant="accent" class="pointer-events-auto"
-          >Get Early Access</Button
+        <Button
+          size="lg"
+          variant="accent"
+          class="pointer-events-auto"
+          href="/download">Get Early Access</Button
         >
       </div>
     </section>
   </main>
-
-  <!-- Footer -->
-  <footer class="border-t border-border/40 py-12">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-        <a href="/" class="flex items-center gap-3 hover:scale-105">
-          <img src="/axton-logo.png" alt="Axton Labs" class="h-8 w-8" />
-          <span class="font-heading text-lg tracking-wider">AXTON LABS</span>
-        </a>
-        <div class="text-sm text-muted-foreground">
-          © 2025 Axton Labs. All rights reserved.
-        </div>
-      </div>
-    </div>
-  </footer>
 </div>
